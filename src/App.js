@@ -11,6 +11,7 @@ import Recipe from './pages/recipe/Recipe'
 import './App.css'
 
 function App() {
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -24,7 +25,7 @@ function App() {
           <Route path="/create">
             <Create />
           </Route>
-          <Route path="/search">
+          <Route path="/search">d
             <Search />
           </Route>
           <Route path="/recipes/:id">
