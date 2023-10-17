@@ -1,25 +1,33 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 
-export const useFetch = (url, _options) => {
+export const useFetch = (url, method = "GET") => {
     const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
+    const [options, setOptions] = useState(null)
 
     // use useRedf to wrap an object/array agrument
     // which is a useEffect dependency
 
-    const options = useRef(_options).current
+    const postData = (postData) => {
+        setOptions({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postData)
+        })
+    }
 
     useEffect(() => {
-        console.log(options)
         const controller = new AbortController()
 
-        const fetchData = async () => {
+        const fetchData = async (fetchOptions) => {
             setIsPending(true)
 
             try {
                 // associate controller with hook
-            const response = await fetch(url, {signal: controller.signal})
+            const response = await fetch(url, {...fetchOptions, signal: controller.signal})
             if (!response.ok) {
                 throw new Error(response.statusText)
             }
@@ -39,8 +47,13 @@ export const useFetch = (url, _options) => {
           }
         }
 
+        if (method === "GET") {
+            fetchData()
+        }
+        if (method === "POST" && options) {
+            fetchData(options)
+        }
         
-        fetchData()
 
         return () => {
             controller.abort()
@@ -48,7 +61,7 @@ export const useFetch = (url, _options) => {
         
         
 
-    }, [url, options])
+    }, [url, options, method])
 
-    return { data, isPending, error }
+    return { data, isPending, error, postData }
 }
