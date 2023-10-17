@@ -47,6 +47,17 @@
       "method": "mix",
       "cookingTime": "10 minutes",
       "id": "N_zbd6Z"
+    },
+    {
+      "title": "ceareal",
+      "ingredients": [
+        "milk",
+        "cereal",
+        "honey"
+      ],
+      "method": "mix together",
+      "cookingTime": "2 minutes",
+      "id": "BE6szFc"
     }
   ]
 }
